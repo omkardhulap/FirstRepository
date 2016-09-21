@@ -1,0 +1,91 @@
+<!DOCTYPE html> 
+<html>
+  <head>
+    <title>Video pattern example</title>   
+    <!-- only force Internet Explorer standards mode for testing on local or intranet machine -->
+    <!-- <meta http-equiv="X-UA-Compatible" content="IE=edge" /> -->
+    <style>
+      button {
+      width:150px;
+      }
+
+    </style>
+  </head>
+  <body>
+    <table>
+      <tr>
+        <td> 
+          <div>
+            <h1>Canvas Patterns with Video</h1>
+            <h3>Make your page full screen, and click the buttons to change the view</h3>
+            <button onclick="draw('repeat')">Repeat all</button>
+            <button onclick="draw('repeat-x')">Repeat across</button> 
+            <button onclick="draw('repeat-y')">Repeat down</button>
+            <button onclick="draw('no-repeat')">No Repeat</button><br />     
+            <label>Enter a video URL: <input type="text" id="videoSrc" size="80" value="http://ie.microsoft.com/testdrive/ieblog/2011/nov/pp4_blog_demo.mp4" /></label> <br />
+          </div>
+        </td>
+        <td>  
+          <video id="pix" controls autoplay width="300">
+            This browser or document mode doesn't support video
+          </video><br />
+
+        </td>
+      </tr>
+    </table>   
+    <canvas id="MyCanvas" width="2000" height="2000">This browser or document mode doesn't support canvas</canvas>
+    <script >
+      // Some global variables    
+      var canvas = document.getElementById("MyCanvas");
+      var lastDirection;
+      var timerID;
+      var pattern;
+      var lastSrc;
+      var video = document.getElementById("pix"); // Get the video object.
+      //  Check for canvas, and get context
+      if (canvas.getContext) {
+        var ctx = canvas.getContext("2d");  // Get the context.
+        //  Optionally set based on window width/height
+   //     canvas.width = window.innerWidth;  // Set canvas width and height
+   //     canvas.height = window.innerHeight;
+        var w = canvas.width;  // Set up w and h for loop below.              
+        var h = canvas.height;
+      }
+
+      function draw(direction) {
+        if (ctx) {
+          var src = document.getElementById("videoSrc").value;
+          if (src == "") {
+            return false;
+          }
+
+          if (lastSrc != src) {   // Change of video
+            video.src = src;    // Assign the video src
+            lastSrc = src;      // Reassign lastSrc          
+            video.load();       // Load src into video control
+            video.play();       // Play it
+          }
+
+          // Clear the screen every time a new direction is selected.
+          if (lastDirection != direction) {  // Check if direction has changed
+            window.cancelAnimationFrame(timerID);
+            ctx.clearRect(0, 0, canvas.width, canvas.height);    // Clear the last image.
+            lastDirection = direction;  // Reset the direction flag
+          }
+          draw2();
+        }
+      }
+
+      function draw2() {
+        if (video.paused || video.ended) {
+          return false;
+        } // Stop loop when video ends
+        pattern = ctx.createPattern(video, lastDirection); // Get the video frame   
+        ctx.fillStyle = pattern;  // Assign pattern as a fill style. 
+        ctx.fillRect(0, 0, w, h); // Fill the canvas. 
+        timerID = window.requestAnimationFrame(draw2);
+      }
+      draw("repeat");   // Start video when loaded
+    </script>
+  </body>
+</html> 

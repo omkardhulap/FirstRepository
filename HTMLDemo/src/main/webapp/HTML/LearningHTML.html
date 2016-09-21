@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+<header>
+	<meta charset="utf-8" />
+	<link rel="stylesheet" type="text/css" href="HTMLStyle.css">
+	<title>Omkar's Title</title>
+	<h1>Using HTML 5 structure elements</h1>
+</header>
+<body>
+	<nav>
+		<ul>
+			<li><a href="#">Home</a></li>
+			<li><a
+				href="http://localhost:8080/HTMLDemo/HTML/About.html">About</a></li>
+			<li><a href="#">Contact</a></li>
+		</ul>
+	</nav>
+		Omkar's Content
+	<h1>Simple Canvas example</h1>
+	<canvas id="myCanvas" width="300" height="300">
+		Canvas is not supported on this browser or in this mode
+	</canvas>
+	
+	<script>
+	      var canvas = document.getElementById("myCanvas");
+	      //  if the canvas element exists 
+	      if (canvas.getContext) {
+	        // Draw some rectangles with different color values
+	        var ctx = canvas.getContext("2d");
+	        ctx.fillStyle = "red";
+	        ctx.fillRect(5, 5, 200, 200);
+	        ctx.fillStyle = "rgba(0,50,200,0.5)";
+	        ctx.fillRect(55, 55, 200, 200);
+	        ctx.fillStyle = "rgba(0,255,10,0.5)";
+	        ctx.fillRect(100, 100, 200, 200);
+	      }
+	    </script>
+
+</body>
+<footer>
+	Copyright &copy; 2014
+	<br />
+	Updated:
+	<time datetime="2010-11-11">15 March 2014</time>
+</footer>
+</html>
