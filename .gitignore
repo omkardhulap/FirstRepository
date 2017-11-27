@@ -1,0 +1,12 @@
+/target/
+bin
+target/
+.project
+.classpath
+.settings/
+build/
+META-INF/
+.metadata
+.recommenders
+LICENSE
+lib/
